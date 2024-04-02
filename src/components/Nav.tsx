@@ -10,12 +10,12 @@ const navLinks = [
   },
   {
     name: "Docs",
-    href: "https://json-schema.org/docs",
+    href: "https://json-schema.org/learn/getting-started-step-by-step",
   },
 
   {
     name: "Tools",
-    href: "https://json-schema.org/tools",
+    href: "https://json-schema.org/implementations",
   },
   {
     name: "Blog",
@@ -23,7 +23,7 @@ const navLinks = [
   },
   {
     name: "Community",
-    href: "https://json-schema.org/community",
+    href: "https://json-schema.org/#community",
   },
 ]
 
