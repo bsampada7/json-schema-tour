@@ -1,21 +1,23 @@
-import Logo from "@/components/Logo";
-import Nav from "@/components/Nav";
+import Tour from "@/components/Tour";
+import WelcomePage from "@/components/WelcomePage";
 import { Inter } from "next/font/google";
+import { useContext, useEffect, useState } from "react";
+import { TourContext } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const { tourPageNumber } = useContext(TourContext);
 
   return (
     <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+      className={`flex min-h-screen md:max-h-screen flex-col items-center justify-between ${inter.className}`}
     >
-      <header className="w-full bg-white dark:bg-slate-800 fixed top-0 z-[170] shadow-xl drop-shadow-lg">
-        <div className="flex w-full md:justify-between items-center ml-8 2xl:px-12 py-4">
-          <Logo />
-          <Nav />
-        </div>
-      </header>
+      {tourPageNumber === 0 && <WelcomePage />}
+      {tourPageNumber > 0 &&
+        <Tour
+          stepNumber={tourPageNumber - 1}
+        />}
     </main>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
-  const [themeIcon, setthemeIcon] = useState("/images/icons/sun.svg")
+  const [themeIcon, setthemeIcon] = useState("/images/icons/moon.svg")
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
@@ -12,10 +12,10 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     if (theme === 'light') {
-      setthemeIcon("/images/icons/sun.svg")
+      setthemeIcon("/images/icons/moon.svg")
     }
     else {
-      setthemeIcon("/images/icons/moon.svg")
+      setthemeIcon("/images/icons/sun.svg")
     }
     return () => {
     }
@@ -24,7 +24,7 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className='dark-mode-toggle rounded-md dark:hover:bg-gray-700 p-1.5 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none transition duration-150'
+      className='rounded-md dark:hover:bg-gray-700 p-1.5 hover:bg-gray-100 transition duration-150'
     >
       <Image src={themeIcon} alt='Toggle theme' width={25} height={25} />
     </button>
