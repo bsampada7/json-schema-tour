@@ -153,7 +153,7 @@ export const steps = [
                 (testCase: any) => testCase.index
               );
               return {
-                message: `Schema does not validate the test cases at indexes ${invalidIndexes.join(
+                message: `Schema does not validate the test cases ${invalidIndexes.join(
                   ", "
                 )}!`,
                 type: "error",
