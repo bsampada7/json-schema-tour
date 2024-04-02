@@ -2,6 +2,9 @@
 const nextConfig = {
   output: "export", 
   basePath: "/json-schema-tour",
+  images: {
+    unoptimized: true,
+  },
   reactStrictMode: true,
 };
 

@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 
 const Logo = () => {
   const { theme } = useTheme();
-  const [imageSrc, setImageSrc] = useState<string>('/images/logo-blue.svg'); // Default to match the server-side render
+  const [imageSrc, setImageSrc] = useState<string>('/json-schema-tour/images/logo-blue.svg'); // Default to match the server-side render
 
   useEffect(() => {
     const src =
       theme === 'dark'
-        ? '/images/logo-white.svg'
-        : '/images/logo-blue.svg';
+        ? '/json-schema-tour/images/logo-white.svg'
+        : '/json-schema-tour/images/logo-blue.svg';
     setImageSrc(src);
   }, [theme]);
 

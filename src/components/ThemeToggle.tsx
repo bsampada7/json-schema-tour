@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 
 const ThemeToggle = () => {
   const { theme, setTheme } = useTheme()
-  const [themeIcon, setthemeIcon] = useState("/images/icons/moon.svg")
+  const [themeIcon, setthemeIcon] = useState("/json-schema-tour/images/icons/moon.svg")
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light')
@@ -12,10 +12,10 @@ const ThemeToggle = () => {
 
   useEffect(() => {
     if (theme === 'light') {
-      setthemeIcon("/images/icons/moon.svg")
+      setthemeIcon("/json-schema-tour/images/icons/moon.svg")
     }
     else {
-      setthemeIcon("/images/icons/sun.svg")
+      setthemeIcon("/json-schema-tour/images/icons/sun.svg")
     }
     return () => {
     }

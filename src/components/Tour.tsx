@@ -87,20 +87,20 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
                   <button className="copy rounded-md bg-slate-600 p-1.5 text-white opacity-50 hover:opacity-90 duration-150"
                     onClick={(e) => onCopy(index, e)}
                   >
-                    <Image src="images/icons/copy.svg" alt="Copy" width={12} height={12} />
+                    <Image src="/json-schema-tour/images/icons/copy.svg" alt="Copy" width={12} height={12} />
                   </button>
                   <button className="check hidden rounded-md bg-slate-600 p-1.5 text-white opacity-90 duration-150">
-                    <Image src="images/icons/check.svg" alt="Copied" width={12} height={12} />
+                    <Image src="/json-schema-tour/images/icons/check.svg" alt="Copied" width={12} height={12} />
                   </button>
                 </div>
                 <div className="forward absolute z-10 top-0 right-0 flex gap-2 mr-1 mt-1">
                   <button className="copy rounded-md bg-slate-600 p-1.5 text-white opacity-50 hover:opacity-90 duration-150"
                     onClick={(e) => onPasteForward(index)}
                   >
-                    <Image src="images/icons/paste-forward.svg" alt="Copy" width={12} height={12} />
+                    <Image src="/json-schema-tour/images/icons/paste-forward.svg" alt="Copy" width={12} height={12} />
                   </button>
                   <button className="check hidden rounded-md bg-slate-600 p-1.5 text-white opacity-90 duration-150">
-                    <Image src="images/icons/check.svg" alt="Copied" width={12} height={12} />
+                    <Image src="/json-schema-tour/images/icons/check.svg" alt="Copied" width={12} height={12} />
                   </button>
                 </div>
               </div>
