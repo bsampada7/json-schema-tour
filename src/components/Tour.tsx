@@ -1,12 +1,14 @@
-import { MouseEventHandler, useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import Header from "./Header"
 import ReactCodeMirror from "@uiw/react-codemirror"
 import { tokyoNight } from "@uiw/codemirror-theme-tokyo-night"
+import { tokyoNightDay } from "@uiw/codemirror-theme-tokyo-night-day"
 import { json } from "@codemirror/lang-json"
 import Image from "next/image"
 import { steps, stepsSchema } from "@/tourSteps"
-import Ajv2020, { Schema } from "ajv/dist/2020";
+import Ajv2020 from "ajv/dist/2020";
 import { TourContext } from "@/pages/_app"
+import { useTheme } from "next-themes"
 
 const ajv2020 = new Ajv2020();
 const validateSteps = ajv2020.compile(stepsSchema);
@@ -17,6 +19,7 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
   const [results, setresults] = useState({ type: "info", message: "Click on the button to validate the schema" })
   const [isJSON, setisJSON] = useState(true)
   const { setTourPageNumber } = useContext(TourContext);
+  const { theme } = useTheme()
 
   const step = steps[stepNumber]
 
@@ -39,7 +42,11 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
 
   const onClickCTA = async (cta: any) => {
     if (!isJSON) {
-      setresults({ type: "error", message: "Invalid JSON" })
+      setresults({ type: "error", message: "Invalid JSON!" })
+      return
+    }
+    if (Object.keys(editorValue).length === 0) {
+      setresults({ type: "info", message: "Please add JSON Schema in the editor!" })
       return
     }
     const result = await cta.onClick(editorValue, cta.testCases);
@@ -72,7 +79,7 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
                 <ReactCodeMirror
                   value={JSON.stringify(example, null, ' ')}
                   editable={false}
-                  theme={tokyoNight}
+                  theme={theme === "dark" ? tokyoNight : tokyoNightDay}
                   extensions={[json()]}
                   basicSetup={
                     {
@@ -106,6 +113,34 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
               </div>
             </div>
           ))}
+          {step.cta.map((cta, index) => {
+            return (
+              <>
+                {'testCases' in cta && cta.testCases.map((example, index) => (
+                  <div key={index}>
+                    <span>Test Case {index + 1}:</span>
+                    <div className="relative">
+                      <ReactCodeMirror
+                        value={JSON.stringify(example, null, ' ')}
+                        editable={false}
+                        theme={theme === "dark" ? tokyoNight : tokyoNightDay}
+                        extensions={[json()]}
+                        basicSetup={
+                          {
+                            foldGutter: true,
+                            syntaxHighlighting: true,
+                            lineNumbers: false,
+                            closeBrackets: true,
+                          }
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </>
+            )
+          })}
+
           <div className="fixed bottom-4 w-full -ml-8 md:w-[48%] flex gap-2 justify-center items-center">
             <button
               className='px-3 py-1 rounded border-2 bg-primary hover:bg-blue-700 text-white font-semibold dark:bg-[560bad] dark:border-none'
@@ -131,7 +166,7 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
             onChange={onEditorChange}
             className="grow flex pb-2 md:border-b-4 border-gray-300 dark:border-gray-700 max-h-[66%]"
             editable={true}
-            theme={tokyoNight}
+            theme={theme === "dark" ? tokyoNight : tokyoNightDay}
             extensions={[json()]}
             basicSetup={
               {
@@ -142,7 +177,7 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
               }
             }
           />
-          <div className="flex flex-col validation-result w-full mt-2 basis-1/3 bg-white">
+          <div className="flex flex-col validation-result w-full basis-1/3 min-h-[20rem] md:min-h-[unset] mt-2 bg-white">
             <div className="flex justify-end mx-1 mt-1">
               {step.cta?.map((cta, index) => (
                 <button
@@ -154,7 +189,9 @@ const Tour = ({ stepNumber }: { stepNumber: number }) => {
                 </button>
               ))}
             </div>
-            <div className={`result grow p-2 bg-gray-200 rounded-sm m-2 ${results.type == 'error' ? 'text-red-600' : ''}`}>
+            <div className={`result grow p-2 bg-gray-200 rounded-sm m-2 
+            ${results.type == 'error' ? 'text-red-600' : ''} 
+            ${results.type == 'success' ? 'text-green-600' : ''}`}>
               {results.message}
             </div>
 

@@ -131,7 +131,8 @@ export const steps = [
         onClick: (schema: Schema, testCases: any) => {
           try {
             const validate = ajv2020.compile(schema);
-            const results = testCases.map((testCase: any) => ({
+            const results = testCases.map((testCase: any, index: number) => ({
+              index: index + 1,
               input: testCase.input,
               expected: testCase.expected,
               result: validate(testCase.input),
@@ -141,12 +142,20 @@ export const steps = [
               results.every((result: any) => result.result === result.expected)
             ) {
               return {
-                message: "Schema validates the given data!",
+                message: "Schema validates all test cases!",
                 type: "success",
               };
             } else {
+              const invalidTestCases = results.filter(
+                (result: any) => result.result !== result.expected
+              );
+              const invalidIndexes = invalidTestCases.map(
+                (testCase: any) => testCase.index
+              );
               return {
-                message: "Schema does not validate the given data!",
+                message: `Schema does not validate the test cases at indexes ${invalidIndexes.join(
+                  ", "
+                )}!`,
                 type: "error",
               };
             }
@@ -190,11 +199,10 @@ export const stepsSchema: Schema = {
                 },
                 required: ["input", "expected"],
               },
-              minItems: 1,
             },
             onClick: {},
           },
-          required: ["text", "onClick"]
+          required: ["text", "onClick"],
         },
       },
     },

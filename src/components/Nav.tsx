@@ -40,22 +40,20 @@ const Nav = () => {
 
   return (
     <div className='flex justify-end md:mr-8 w-full gap-2'>
-      {tourPageNumber > 0 ? <span className="font-semibold p-2 md:p-4 dark:text-slate-300 text-slate">
+      <span className={`font-semibold p-2 md:p-4 dark:text-slate-300 text-slate ${tourPageNumber === 0 ? "md:hidden" : ""}`}>
         A tour of JSON Schema
       </span>
-        :
-        <>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-semibold p-2 md:p-4 dark:text-slate-300 text-slate-600 hover:underline"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </>
-      }
+      {tourPageNumber === 0 && <>
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="font-semibold p-2 md:p-4 dark:text-slate-300 text-slate-600 hover:underline hidden md:block"
+          >
+            {link.name}
+          </Link>
+        ))}
+      </>}
 
       <div className='flex items-center max-sm:ml-4 mr-8  gap-6 md:gap-4 dark:bg-slate-800'>
         <ThemeToggle />
